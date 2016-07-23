@@ -1,0 +1,26 @@
+{
+  "name": "angularjs-html5-joystick",
+  "version": "1.0.0",
+  "description": "HTML5 joystick control as an Angularjs module.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomas-kendall/angularjs-html5-joystick.git"
+  },
+  "keywords": [
+    "angularjs",
+    "html5",
+    "joystick"
+  ],
+  "author": "Thomas Kendall",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/thomas-kendall/angularjs-html5-joystick/issues"
+  },
+  "homepage": "https://github.com/thomas-kendall/angularjs-html5-joystick#readme",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0"
+  }
+}
