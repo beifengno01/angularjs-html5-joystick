@@ -8,7 +8,8 @@ module.exports = function(grunt) {
 
         concat: {
             js: {
-                files: {'dist/angularjs-html5-joystick.js' : 'src/**/*.js'}
+                src: ['src/**/*-module.js', 'src/**/*-controller.js', 'src/**/*-directive.js'],
+                dest: 'dist/angularjs-html5-joystick.js'
             }
         },
 
