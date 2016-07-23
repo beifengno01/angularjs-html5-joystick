@@ -1,7 +1,7 @@
 (function() {
-"use strict";
+    "use strict";
 
-var module = angular.module('angularjsHtml5Joystick', []);
+    var module = angular.module('angularjsHtml5Joystick', []);
 
 }());
 (function() {
@@ -143,19 +143,19 @@ var module = angular.module('angularjsHtml5Joystick', []);
                 onMove: '&'
             },
             controller: 'AngularjsHtml5JoystickController',
-            link: function ($scope, element, attrs) { //DOM manipulation
+            link: function (scope, element, attrs) { //DOM manipulation
                 element.on('touchstart', function(e) {
                     e.preventDefault();
                     //var statusElement = $('#' + attrs.id + '-status');
                     //statusElement.html('start');
-                    $scope.onTouchStart();
+                    scope.onTouchStart();
                 });
                 
                 element.on('touchend', function(e) {
                     e.preventDefault();
                     //var statusElement = $('#' + attrs.id + '-status');
                     //statusElement.html('end');
-                    $scope.onTouchEnd();
+                    scope.onTouchEnd();
                 });
                 
                 element.on('touchmove', function(e) {
@@ -173,7 +173,7 @@ var module = angular.module('angularjsHtml5Joystick', []);
                         //statusElement.html('x='+x + '  y= ' + y);
                         //var canvasCoordinates = {x: e.offsetX, y:e.offsetY}; // for using mousemove instead of touchmove
                         var canvasCoordinates = {x: x, y: y};
-                        $scope.onTouchMove(canvasCoordinates);
+                        scope.onTouchMove(canvasCoordinates);
                     }
                 });
             } 
