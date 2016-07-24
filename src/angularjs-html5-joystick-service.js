@@ -7,7 +7,7 @@
 
         // var canvasId = $attrs.id;
         
-        var createElementDetails = function(canvasId){
+        var createElementDetails = function(canvasId, drawCallback){
             var canvas = document.getElementById(canvasId);
 
             var bounds = {
@@ -29,7 +29,8 @@
                 vector: {
                     angle: 0.0,
                     magnitude: 0.0                    
-                }
+                },
+                drawCallback: drawCallback
             };
 
             return elementDetails;
@@ -39,18 +40,27 @@
             var ctx = elementDetails.canvas.getContext('2d');						
             ctx.clearRect(0, 0, elementDetails.canvas.width, elementDetails.canvas.height);
             
-            // Big circle
-            ctx.beginPath();
-            ctx.arc(elementDetails.bounds.center.x, elementDetails.bounds.center.y, elementDetails.bounds.outerRadius, 0, 2 * Math.PI);
-            ctx.stroke();		
-            
-            // Little circle
-            var cartesianCoordinates = vectorToCartesianCoordinates(elementDetails.bounds.outerRadius, elementDetails.vector);
-            var canvasCoordinates = cartesianCoordinatesToCanvasCoordinates(elementDetails.bounds.center, cartesianCoordinates);
-            ctx.fillStyle = 'green';
-            ctx.beginPath();
-            ctx.arc(canvasCoordinates.x, canvasCoordinates.y, elementDetails.bounds.innerRadius, 0, 2 * Math.PI);
-            ctx.fill();				
+            if(elementDetails.drawCallback) {
+                // Let the callback do the drawing
+                elementDetails.drawCallback({
+                    ctx: ctx, 
+                    bounds: elementDetails.bounds, 
+                    vector: elementDetails.vector
+                });
+            } else {
+                // Big circle
+                ctx.beginPath();
+                ctx.arc(elementDetails.bounds.center.x, elementDetails.bounds.center.y, elementDetails.bounds.outerRadius, 0, 2 * Math.PI);
+                ctx.stroke();		
+                
+                // Little circle
+                var cartesianCoordinates = vectorToCartesianCoordinates(elementDetails.bounds.outerRadius, elementDetails.vector);
+                var canvasCoordinates = cartesianCoordinatesToCanvasCoordinates(elementDetails.bounds.center, cartesianCoordinates);
+                ctx.fillStyle = 'green';
+                ctx.beginPath();
+                ctx.arc(canvasCoordinates.x, canvasCoordinates.y, elementDetails.bounds.innerRadius, 0, 2 * Math.PI);
+                ctx.fill();
+            }				
         };
         
         var canvasCoordinatesToCartesianCoordinates = function(center, canvasCoordinates){

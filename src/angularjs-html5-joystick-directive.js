@@ -9,16 +9,15 @@
             scope: {
                 //@ reads the attribute value, = provides two-way binding, & works with functions
                 id: '@',
-                onMove: '&'
+                onMove: '&',
+                draw: '&?'
             },
-            link: function (scope, element, attrs) { //DOM manipulation
-                scope.elementDetails = angularjsHtml5JoystickService.createElementDetails(attrs.id);
+            link: function (scope, element, attrs) { //DOM manipulation                
+                scope.elementDetails = angularjsHtml5JoystickService.createElementDetails(attrs.id, scope.draw);
                 
                 element.on('touchmove', function(e) {
                     e.preventDefault();
-                    //var statusElement = $('#' + attrs.id + '-status');
-                    //statusElement.html('move');
-                    var event = window.event; // for some reason, 'e' is useless so we get all data from event
+                    var event = window.event; // for some reason, 'e' is useless so we get all data from window.event
                     if(event.targetTouches.length > 0){        			        		
                         var touch = event.targetTouches[0];
                         var offset = element.offset();

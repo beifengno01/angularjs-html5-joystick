@@ -14,7 +14,7 @@
 				<canvas angularjs-html5-joystick id="left-joystick" on-move="onLeftJoystickMove(vector)"/>
 			</div>
 			<div class="col-xs-6">
-				<canvas angularjs-html5-joystick id="right-joystick" on-move="onRightJoystickMove(vector)"/>
+				<canvas angularjs-html5-joystick id="right-joystick" on-move="onRightJoystickMove(vector)" draw="drawRightJoystick(ctx, bounds, vector)"/>
 			</div>
 		</div>
 
