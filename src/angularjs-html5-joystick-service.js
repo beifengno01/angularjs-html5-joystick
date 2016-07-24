@@ -39,43 +39,33 @@
             var ctx = elementDetails.canvas.getContext('2d');						
             ctx.clearRect(0, 0, elementDetails.canvas.width, elementDetails.canvas.height);
             
-            // Lines
-            ctx.beginPath();
-            ctx.moveTo(0, elementDetails.bounds.center.y);
-            ctx.lineTo(elementDetails.bounds.center.x * 2, elementDetails.bounds.center.y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(elementDetails.bounds.center.x, 0);
-            ctx.lineTo(elementDetails.bounds.center.x, elementDetails.bounds.center.y * 2);
-            ctx.stroke();
-            
             // Big circle
             ctx.beginPath();
             ctx.arc(elementDetails.bounds.center.x, elementDetails.bounds.center.y, elementDetails.bounds.outerRadius, 0, 2 * Math.PI);
             ctx.stroke();		
             
             // Little circle
-            var relativeCoordinates = vectorToRelativeCoordinates(elementDetails.bounds.outerRadius, elementDetails.vector);
-            var canvasCoordinates = relativeCoordinatesToCanvasCoordinates(elementDetails.bounds.center, relativeCoordinates);
+            var cartesianCoordinates = vectorToCartesianCoordinates(elementDetails.bounds.outerRadius, elementDetails.vector);
+            var canvasCoordinates = cartesianCoordinatesToCanvasCoordinates(elementDetails.bounds.center, cartesianCoordinates);
             ctx.fillStyle = 'green';
             ctx.beginPath();
             ctx.arc(canvasCoordinates.x, canvasCoordinates.y, elementDetails.bounds.innerRadius, 0, 2 * Math.PI);
             ctx.fill();				
         };
         
-        var canvasCoordinatesToRelativeCoordinates = function(center, canvasCoordinates){
-            var relativeCoordinates = {
+        var canvasCoordinatesToCartesianCoordinates = function(center, canvasCoordinates){
+            var cartesianCoordinates = {
                 x: canvasCoordinates.x - center.x, 
                 y: -1.0 * (canvasCoordinates.y - center.y) 
             };
             
-            return relativeCoordinates;
+            return cartesianCoordinates;
         };
         
-        var relativeCoordinatesToVector = function(outerRadius, relativeCoordinates){
+        var cartesianCoordinatesToVector = function(outerRadius, cartesianCoordinates){
             var vector = {
-                angle: Math.atan2(relativeCoordinates.y , relativeCoordinates.x), 
-                magnitude: Math.sqrt(relativeCoordinates.x * relativeCoordinates.x + relativeCoordinates.y * relativeCoordinates.y) / outerRadius 
+                angle: Math.atan2(cartesianCoordinates.y , cartesianCoordinates.x), 
+                magnitude: Math.sqrt(cartesianCoordinates.x * cartesianCoordinates.x + cartesianCoordinates.y * cartesianCoordinates.y) / outerRadius 
             };
             
             if(vector.magnitude > 1.0){
@@ -85,21 +75,21 @@
             return vector;
         };
         
-        var vectorToRelativeCoordinates = function(outerRadius, vector){
+        var vectorToCartesianCoordinates = function(outerRadius, vector){
             var canvasMagnitude = vector.magnitude * outerRadius;
             
-            var relativeCoordinates = {
+            var cartesianCoordinates = {
                 x: canvasMagnitude * Math.cos(vector.angle), 
                 y: canvasMagnitude * Math.sin(vector.angle)  
             };
             
-            return relativeCoordinates;
+            return cartesianCoordinates;
         };
         
-        var relativeCoordinatesToCanvasCoordinates = function(center, relativeCoordinates){
+        var cartesianCoordinatesToCanvasCoordinates = function(center, cartesianCoordinates){
             var canvasCoordinates = {
-                x: relativeCoordinates.x + center.x,
-                y: center.y - relativeCoordinates.y  
+                x: cartesianCoordinates.x + center.x,
+                y: center.y - cartesianCoordinates.y  
             };
             
             return canvasCoordinates;
@@ -110,8 +100,8 @@
         };
                 
         var touchMove = function(elementDetails, canvasCoordinates) {
-            var relativeCoordinates = canvasCoordinatesToRelativeCoordinates(elementDetails.bounds.center, canvasCoordinates);
-            elementDetails.vector = relativeCoordinatesToVector(elementDetails.bounds.outerRadius, relativeCoordinates);            
+            var cartesianCoordinates = canvasCoordinatesToCartesianCoordinates(elementDetails.bounds.center, canvasCoordinates);
+            elementDetails.vector = cartesianCoordinatesToVector(elementDetails.bounds.outerRadius, cartesianCoordinates);            
             onVectorChange(elementDetails);
         };
         
