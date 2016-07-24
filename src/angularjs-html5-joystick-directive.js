@@ -5,7 +5,7 @@
 
     var joystickDirective = function (angularjsHtml5JoystickService) {
         return {
-            restrict: 'EA', //E = element, A = attribute, C = class, M = comment         
+            restrict: 'A', //E = element, A = attribute, C = class, M = comment         
             scope: {
                 //@ reads the attribute value, = provides two-way binding, & works with functions
                 id: '@',
